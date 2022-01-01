@@ -1,1 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>djmujick</title>
+	 <link rel="ficon" href="img/img1.jpg" type="img/.jpg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>button,input{ width:260px; height: 240px; font-size: 100% ; border-radius:40%; background-color:skyblue;}
+p,div,legend{font-size: 60px; color:red;}
+input{width:1000px; color:green;}
+button:focus{color:red;}
+button:hover { font-size: 100%;
+background-color:darkblue; width:225px; height: 105px;}
+a{text-decoration: none; background-color:black;}
+</style>
+<body bgcolor="orange"> <fieldset> <legend>English Ncs Hits Music</legend> <center> <h1>
+    <script>
+        function changeBodyBg(color) { document.body.style.background = color; }
+    </script><p><b><mark> dark mode ~ </mark>
+    <button type="button" onclick="changeBodyBg('orange');" style="background:orange; border: none; border-radius:90%; width:120px; height: 90px;">OF</button>
+    <button type="button" onclick="changeBodyBg('silver');" style="background:silver; color:white; border:none; border-radius:90%; width:120px; height: 90px;  ">ON</button></b></p>
+  <div class="main">
+  	<p id="logo"><i class="fa fa-music"></i>Music player & download</p> <hr />
+    <!--- left part --->
+     <div class="left">
+      <!--- song img --->
+      <img id="track_image" alt ="Error - you have bing offline 
+     please chak youer inter connting & try again letter" style="width:600px;height:200px;">
+         <div class="volume">
+            <p id="volume_show">- 90 +</p>
+            <i class="fa fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
+            <input type="range" min="0" max="100" value="90" onchange="volume_change()" id="volume">  
+         </div> </div>
+     <!--- right part --->
+ <div class="right"> <div class="show_song_no">
+ <p>Songs No...</p><p id="present">1</p>
+ <p>Total Song</p> <p id="total">21</p> </div>
+       <!--- song title & artist name --->
+  <p id="title">title.mp3</p> <p id="artist">Artist name</p>
+      <!--- middle part --->
+  	 	<div class="middle">
+  	       <button onclick="previous_song()" id="pre"><i class="fa fa-step-backward" aria-hidden="true">prvs</i></button> &nbsp;
+      	   <button onclick="justplay()" id="play"><i class="fa fa-play" aria-hidden="true">play</i></button>
+  	     &nbsp;  <button onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true">Next</i></button> </div>
+       <!--- song duration part --->
+        <div class="duration">
+           <input type="range" min="0" max="100" value="0" id="duration_slider" onchange="change_duration()">
+        </div>
+           <button id="auto" onclick="autoplay_switch()">Auto play <i class="fa fa-circle-o-notch" aria-hidden="true"></i></button>
+  	</div> </div>
+ </h1> </b></center> </fieldset>
+  <!--- Add javascript file --->
+  <script>
+      let previous = document.querySelector('#pre');
+let play = document.querySelector('#play');
+let next = document.querySelector('#next');
+let title = document.querySelector('#title');
+let recent_volume= document.querySelector('#volume');
+let volume_show = document.querySelector('#volume_show');
+let slider = document.querySelector('#duration_slider');
+let show_duration = document.querySelector('#show_duration');
+let track_image = document.querySelector('#track_image');
+let auto_play = document.querySelector('#auto');
+let present = document.querySelector('#present');
+let total = document.querySelector('#total');
+let artist = document.querySelector('#artist');
+let timer;
+let autoplay = 0;
+let index_no = 0;
+let Playing_song = false;
+//create a audio Element
+let track = document.createElement('audio');
+//All songs list
+let All_song = [
+   {
+     name: "first song<br /><a href='#'target='blank'>DOWN</a>",
+     path: "music/song2.mp3",
+     img: "img/img3.jpg",
+     singer: "Powerd By ~ djmujick.netlify.app",
+   },
+   {
+     name: " doremon new songs 2020-21 with dj mad world <br /> <a href='music/song2.mp3' target='blank'>download</a>",
+     path: "music/song2.mp3",
+     img: "img/img3.jpg",
+     singer: "Powerd By ~ djmujick.netlify.app"
+   },
+   {
+     name: "third song",
+     path: "music/song3.mp3",
+     img: "img/img3.jpg",
+     singer: "Powerd By ~ djmujick.netlify.app"
+   },
+   {
+     name: "fourth song - doremon tital track with djmadworld",
+     path: "music/song4.mp3",
+     img: "img/img3.jpg",
+     singer: "Powerd By ~ djmujick.netlify.app"
+   },
+   {
+     name: "fifth song",
+     path: "music/song5.mp3",
+     img: "img/img3.jpg",
+     singer: "Powerd By ~ djmujick.netlify.app"
+   },
+    {
+    name: "second song",
+    path: "music/song2.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "third song",
+    path: "music/song3.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "fourth song - doremon tital track with djmadworld",
+    path: "music/song4.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "fifth song",
+    path: "music/song5.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "second song",
+    path: "music/song2.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "third song",
+    path: "music/song3.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "fourth song - doremon tital track with djmadworld",
+    path: "music/song4.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "fifth song",
+    path: "music/song5.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "second song",
+    path: "music/song2.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "third song",
+    path: "music/song3.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "fourth song - doremon tital track with djmadworld",
+    path: "music/song4.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "fifth song",
+    path: "music/song5.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "second song",
+    path: "music/song2.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "third song",
+    path: "music/song3.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "fourth song - doremon tital track with djmadworld",
+    path: "music/song4.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    },
+    {
+    name: "fifth song",
+    path: "music/song5.mp3",
+    img: "img/img3.jpg",
+    singer: "Powerd By ~ djmujick.netlify.app"
+    }
+   
+   
+];
+// All functions
+// function load the track
+function load_track(index_no){
+	clearInterval(timer);
+	reset_slider();
+	track.src = All_song[index_no].path;
+	title.innerHTML = All_song[index_no].name;	
+	track_image.src = All_song[index_no].img;
+    artist.innerHTML = All_song[index_no].singer;
+    track.load();
+	timer = setInterval(range_slider ,1000);
+	total.innerHTML = All_song.length;
+	present.innerHTML = index_no + 1;
+}
+load_track(index_no);
+//mute sound function
+function mute_sound(){
+	track.volume = 0;
+	volume.value = 0;
+	volume_show.innerHTML = 0;
+}
+// checking.. the song is playing or not
+ function justplay(){
+ 	if(Playing_song==false){
+ 		playsong();
 
+ 	}else{
+ 		pausesong();
+ 	}
+ }
+// reset song slider
+ function reset_slider(){
+ 	slider.value = 0;
+ }
+// play song
+function playsong(){
+  track.play();
+  Playing_song = true;
+  play.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
+}
+//pause song
+function pausesong(){
+	track.pause();
+	Playing_song = false;
+	play.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
+}
+// next song
+function next_song(){
+	if(index_no < All_song.length - 1){
+		index_no += 1;
+		load_track(index_no);
+		playsong();
+	}else{
+		index_no = 0;
+		load_track(index_no);
+		playsong();
+	}
+}
+// previous song
+function previous_song(){
+	if(index_no > 0){
+		index_no -= 1;
+		load_track(index_no);
+		playsong();
+
+	}else{
+		index_no = All_song.length;
+		load_track(index_no);
+		playsong();
+	}
+}
+// change volume
+function volume_change(){
+	volume_show.innerHTML = recent_volume.value;
+	track.volume = recent_volume.value / 100;
+}
+// change slider position 
+function change_duration(){
+	slider_position = track.duration * (slider.value / 100);
+	track.currentTime = slider_position;
+}
+// autoplay function
+function autoplay_switch(){
+	if (autoplay==1){
+       autoplay = 0;
+       auto_play.style.background = "rgba(255,255,255,0.2)";
+	}else{
+       autoplay = 1;
+       auto_play.style.background = "#FF8A65";
+	}
+}
+function range_slider(){
+	let position = 0;
+        // update slider position
+		if(!isNaN(track.duration)){
+		   position = track.currentTime * (100 / track.duration);
+		   slider.value =  position;
+	      }
+       // function will run when the song is over
+       if(track.ended){
+       	 play.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
+           if(autoplay==1){
+		       index_no += 1;
+		       load_track(index_no);
+		       playsong();
+           }
+	    }
+     }
+  </script>
+</body>
+</html>
