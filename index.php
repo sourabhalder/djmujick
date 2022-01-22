@@ -1,2 +1,2 @@
 
-<a href="manu/upload/index.html">upload your music click heair</a>
+<a href="manu/Upload/index.html">upload your music click heair</a>
