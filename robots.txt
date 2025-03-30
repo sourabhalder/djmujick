@@ -1,0 +1,24 @@
+User-agent: *
+
+Disallow: /wp-admin/
+Disallow: /*.jpg$
+Disallow: /*.cjs$
+Disallow: /*.js$
+Disallow: /*.pdf$
+Disallow: /*.htm$
+Disallow: /*.mjs$
+Disallow: /*.gif$
+Disallow: /*.css$
+Disallow: /*.html$
+Disallow: /notice/
+Disallow: /pro/
+Disallow: /img/
+Disallow: /pro/pro/
+Disallow: /*.jpeg$
+Disallow: /pro/admin.html
+
+Crawl-delay: 15
+Sitemap: https://sourabhalder.eu.org/sitemap_index.xml
+
+Allow: index.html
+Allow: /index/
